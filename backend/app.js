@@ -12,6 +12,9 @@ app.use('/api/v1', productRoute);
 const userRoute = require('./routes/userRoutes');
 app.use('/api/v1', userRoute);
 
+const orderRoute = require('./routes/orderRoutes');
+app.use('/api/v1', orderRoute);
+
 //middleware for error
 const errorMiddleware = require('./middleware/error');
 app.use(errorMiddleware);
