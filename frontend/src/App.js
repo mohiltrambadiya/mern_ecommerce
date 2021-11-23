@@ -22,7 +22,7 @@ function App() {
     <BrowserRouter>
       <Header/>
       <Routes>
-        <Route path="/" element={<Home/>}></Route>
+        <Route exact path="/" element={<Home/>}></Route>
       </Routes>
       <Footer/>
     </BrowserRouter>
