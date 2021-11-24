@@ -7,7 +7,7 @@ module.exports = (err, req, res, next) => {
 
     //manage cast error || wrond mongodb id error
     if(err.name === 'CastError') {
-        const message = `Resource not found. invalid: ${err.path}`;
+        const message = `Resource not found. invalid: ${err.stack}`;
         err = new ErrorHandler(message, 400);
     }
 
@@ -28,6 +28,6 @@ module.exports = (err, req, res, next) => {
 
     res.status(err.statusCode).json({
         success: false,
-        message: err.message
+        message: err.stack
     });
 }

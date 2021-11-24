@@ -1,6 +1,5 @@
 .banner {
-    /* background-image: url("../../images/cover.jfif"); */
-    background-color: #ffffff;
+    background-image: url("../../images/cover.jfif");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
