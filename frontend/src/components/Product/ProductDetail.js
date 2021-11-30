@@ -8,6 +8,7 @@ import "./ProductDetail.css";
 import ReviewCard from './ReviewCard.js'
 import Loader from "../layout/Loader/Loader"
 import { useAlert } from "react-alert"
+import MetaData from "../layout/MetaData";
 
 const ProductDetail = () => {
   const dispach = useDispatch();
@@ -37,6 +38,7 @@ const ProductDetail = () => {
     <Fragment>
       {loading ? (<Loader/>) : (
         <Fragment>
+          <MetaData title={`PRODUCTDETAIL - ${productDetail.name}`} />
           <div className="ProductDetails">
             <div>
               <Carousel>

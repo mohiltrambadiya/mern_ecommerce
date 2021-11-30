@@ -8,12 +8,25 @@ import ProductCard from "../Home/ProductCard";
 import { useParams } from "react-router-dom";
 import Pagination from "react-js-pagination";
 import { Typography, Slider } from "@material-ui/core";
+import MetaData from "../layout/MetaData";
+
+const categories = [
+  "Laptop",
+  "Footwear",
+  "Bottom",
+  "Tops",
+  "Attire",
+  "Camera",
+  "SmartPhone"
+]
 
 const Products = () => {
   const dispatch = useDispatch();
   const alert = useAlert();
-  const [currentPage, setCurrentPage] = useState(1);
-  const [price, setPrice] = useState([0, 25000]);
+  const [currentPage, setCurrentPage] = useState(1)
+  const [price, setPrice] = useState([0, 25000000000])
+  const [category, setCategory] = useState("")
+  const [rating, setRating] = useState(0)
   const {
     loading,
     error,
@@ -39,8 +52,8 @@ const Products = () => {
       alert.error(error);
       dispatch(clearErrors());
     }
-    dispatch(getAllProduct(keyword, currentPage, price));
-  }, [dispatch, error, alert, keyword, currentPage, price]);
+    dispatch(getAllProduct(keyword, currentPage, price, category, rating));
+  }, [dispatch, error, alert, keyword, currentPage, price, category, rating]);
   
   return (
     <Fragment>
@@ -48,6 +61,7 @@ const Products = () => {
         <Loader />
       ) : (
         <Fragment>
+          <MetaData title="PRODUCTS" />
           <h2 className="productsHeading">Products</h2>
           <div className="products">
             {products &&
@@ -64,6 +78,28 @@ const Products = () => {
               min={0}
               max={25000}
             />
+
+            <Typography>Categories</Typography>
+            <ul className="categoryBox">
+              {categories.map((category) => (
+                <li className="category-link" key={category} onClick={() => setCategory(category)}>
+                  {category}
+                </li>
+              ))}
+            </ul>
+
+            <fieldset>
+              <Typography>Ratings Above</Typography>
+              <Slider
+                value = {rating}
+                onChange = {(e, newRating) => (setRating(newRating))}
+                aria-labelledby = "continuous-slide"
+                min = {0}
+                max = {5}
+                valueLabelDisplay = "auto"
+              />
+            </fieldset>
+
           </div>
 
           {resultPerPage < count && (
