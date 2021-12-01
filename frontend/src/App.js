@@ -11,8 +11,15 @@ import Search from "./components/Product/Search.js";
 import LoginSignup from "./components/User/LoginSignup";
 import store from "./store";
 import { loadUser } from "./actions/userAction";
+import UserOptions from "./components/layout/Header/UserOptions.js";
+import { useSelector } from "react-redux";
+import Profile from "./components/User/Profile.js";
+import ProtectedRoute from "./components/route/ProtectedRoute";
+import UpdateProfile from "./components/User/UpdateProfile.js";
+import ChangePassword from "./components/User/ChangePassword.js";
 
 function App() {
+  const { isAuthenticated, user } = useSelector((state) => state.user);
   React.useEffect(() => {
     Webfont.load({
       google: {
@@ -25,13 +32,31 @@ function App() {
   return (
     <BrowserRouter>
       <Header />
+      {isAuthenticated && <UserOptions user={user} />}
       <Routes>
         <Route exact path="/" element={<Home />}></Route>
         <Route exact path="/product/:id" element={<ProductDetail />}></Route>
         <Route exact path="/products" element={<Products />}></Route>
         <Route path="/products/:keyword" element={<Products />}></Route>
         <Route exact path="/search" element={<Search />}></Route>
-        <Route exact path="/Login" element={<LoginSignup />}></Route>
+        <Route exact path="/login" element={<LoginSignup />}></Route>
+        <Route exact path="/account" element={<ProtectedRoute />}>
+          <Route exact path="/account" element={<Profile />}></Route>
+        </Route>
+        <Route exact path="/profile/update" element={<ProtectedRoute />}>
+          <Route
+            exact
+            path="/profile/update"
+            element={<UpdateProfile />}
+          ></Route>
+        </Route>
+        <Route exact path="/password/update" element={<ProtectedRoute />}>
+          <Route
+            exact
+            path="/password/update"
+            element={<ChangePassword />}
+          ></Route>
+        </Route>
       </Routes>
       <Footer />
     </BrowserRouter>

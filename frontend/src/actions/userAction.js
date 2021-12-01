@@ -8,11 +8,19 @@ import {
   LOAD_USER_REQUEST,
   LOAD_USER_SUCCESS,
   LOAD_USER_FAIL,
+  LOGOUT_SUCCESS,
+  LOGOUT_FAIL,
+  PROFILE_UPDATE_REQUEST,
+  PROFILE_UPDATE_SUCCESS,
+  PROFILE_UPDATE_FAIL,
   CLEAR_ERRORS,
-
+  PASSWORD_UPDATE_SUCCESS,
+  PASSWORD_UPDATE_REQUEST,
+  PASSWORD_UPDATE_FAIL
 } from "../constants/userConstants";
 
 import axios from "axios";
+import { PRODUCT_DETAIL_SUCCESS } from "../constants/productConstants";
 
 //login user
 export const login = (email, password) => async (dispatch) => {
@@ -77,6 +85,65 @@ export const loadUser = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: LOAD_USER_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+//logout user
+export const logout = () => async (dispatch) => {
+  try {
+    await axios.get(
+      `/api/v1/logout`
+    );
+    dispatch({
+      type: LOGOUT_SUCCESS,
+    });
+  } catch (error) {
+    dispatch({
+      type: LOGOUT_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+//update user profile
+export const updateUserProfile = (userData) => async (dispatch) => {
+  try {
+    dispatch({
+      type: PROFILE_UPDATE_REQUEST,
+    });
+    const config = { headers: { "Content-Type": "multipart/form-data" } };
+
+    const { data } = await axios.put(`/api/v1/user/profile/update`, userData, config);
+    dispatch({
+      type: PROFILE_UPDATE_SUCCESS,
+      payload: data.success,
+    });
+  } catch (error) {
+    dispatch({
+      type: PROFILE_UPDATE_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+//change password
+export const changePassword = (passwords) => async (dispatch) => {
+  try {
+    dispatch({
+      type: PASSWORD_UPDATE_REQUEST,
+    });
+    const config = { headers: { "Content-Type": "application/json" } };
+
+    const { data } = await axios.put(`/api/v1/user/password/change`, passwords, config);
+    dispatch({
+      type: PASSWORD_UPDATE_SUCCESS,
+      payload: data.success,
+    });
+  } catch (error) {
+    dispatch({
+      type: PASSWORD_UPDATE_FAIL,
       payload: error.response.data.message,
     });
   }
