@@ -56,7 +56,7 @@ const UpdateProfile = () => {
       setName(user.name);
       setEmail(user.email);
       {
-        user.avatar.url
+        user.avatar && user.avatar.url
           ? setAvatarPerview(user.avatar.url)
           : setAvatarPerview(ProfileImg);
       }

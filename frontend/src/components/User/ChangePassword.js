@@ -44,49 +44,62 @@ const ChangePassword = () => {
 
   return (
     <Fragment>
-      <MetaData title="change password" />
-      <div className="updatePasswordContainer">
-        <div className="updatePasswordBox">
-          <h2 className="updatePasswordHeading">Change Password</h2>
-          <form className="updatePasswordForm" onSubmit={changePasswordSubmit}>
-            <div className="signUpPassword">
-              <VpnKey />
-              <input
-                type="password"
-                placeholder="Old Password"
-                required
-                value={oldPassword}
-                onChange={(e) => setOldPassword(e.target.value)}
-              />
-            </div>
+      {loading ? (
+        <Loader />
+      ) : (
+        <Fragment>
+          <MetaData title="change password" />
+          <div className="updatePasswordContainer">
+            <div className="updatePasswordBox">
+              <h2 className="updatePasswordHeading">Change Password</h2>
+              <form
+                className="updatePasswordForm"
+                onSubmit={changePasswordSubmit}
+              >
+                <div className="signUpPassword">
+                  <VpnKey />
+                  <input
+                    type="password"
+                    placeholder="Old Password"
+                    required
+                    value={oldPassword}
+                    onChange={(e) => setOldPassword(e.target.value)}
+                  />
+                </div>
 
-            <div className="signUpPassword">
-              <LockOpen />
-              <input
-                type="password"
-                placeholder="New Password"
-                required
-                value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
-              />
-            </div>
+                <div className="signUpPassword">
+                  <LockOpen />
+                  <input
+                    type="password"
+                    placeholder="New Password"
+                    required
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                  />
+                </div>
 
-            <div className="signUpPassword">
-              <Lock />
-              <input
-                type="password"
-                placeholder="Confirm Password"
-                required
-                value={confirmPassword}
-                name="password"
-                onChange={(e) => setConfirmPassword(e.target.value)}
-              />
-            </div>
+                <div className="signUpPassword">
+                  <Lock />
+                  <input
+                    type="password"
+                    placeholder="Confirm Password"
+                    required
+                    value={confirmPassword}
+                    name="password"
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                  />
+                </div>
 
-            <input type="submit" value="Change" className="updatePasswordBtn" />
-          </form>
-        </div>
-      </div>
+                <input
+                  type="submit"
+                  value="Change"
+                  className="updatePasswordBtn"
+                />
+              </form>
+            </div>
+          </div>
+        </Fragment>
+      )}
     </Fragment>
   );
 };

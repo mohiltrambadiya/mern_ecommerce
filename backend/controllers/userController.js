@@ -8,22 +8,24 @@ const cloudinary = require("cloudinary");
 
 //user register
 exports.registerUser = catchAsyncError(async (req, res, next) => {
-  const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
-    folder: "avatars",
-    width: 150,
-    crop: "scale",
-  });
-
   const { name, email, password } = req.body;
-  const user = await User.create({
+  const userData = {
     name,
     email,
-    password,
-    avatar: {
-        public_id: myCloud.public_id,
-        url: myCloud.secure_url,
-    },
-  });
+    password
+  };
+  if(req.body.avatar !== 'undefined' && req.body.avatar !== 'null') {
+    const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
+      folder: "avatars",
+      width: 150,
+      crop: "scale",
+    });
+    userData.avatar = {
+      public_id: myCloud.public_id,
+      url: myCloud.secure_url,
+    }
+  }
+  const user = await User.create(userData);
   sendJWTtoken(user, 201, res);
 });
 
@@ -70,9 +72,7 @@ exports.sendResetPasswordMail = catchAsyncError(async (req, res, next) => {
   const resetToken = user.getResetPasswordToken();
   await user.save({ validateBeforeSave: false });
 
-  const resetPasswordUrl = `${req.protocol}://${req.get(
-    "host"
-  )}/api/v1/password/reset/${resetToken}`;
+  const resetPasswordUrl = `${process.env.FRONTEND_URL}/password/reset/${resetToken}`;
   const message = `Hello ${user.name} \n\n Your reset password url is below. \n ${resetPasswordUrl} \n\n Thank you`;
 
   try {
@@ -83,7 +83,7 @@ exports.sendResetPasswordMail = catchAsyncError(async (req, res, next) => {
     });
     res.status(200).json({
       success: true,
-      message: "Reset password mail send to user succesfully.",
+      message: `Reset password mail send to ${user.email}`,
     });
   } catch (err) {
     user.reset_password_token = undefined;
@@ -100,7 +100,6 @@ exports.resetPassword = catchAsyncError(async (req, res, next) => {
     .createHash("sha256")
     .update(req.params.token)
     .digest("hex");
-  console.log(resetPasswordToken);
   const user = await User.findOne({
     reset_password_token: resetPasswordToken,
     reset_password_expire: { $gt: Date.now() },
@@ -164,13 +163,36 @@ exports.changePassword = catchAsyncError(async (req, res, next) => {
 
 //update user profile.
 exports.updateUserProfile = catchAsyncError(async (req, res, next) => {
-  const user = await User.findByIdAndUpdate(req.user.id, req.body, {
+  const newUserData = {
+    name: req.body.name,
+    email: req.body.email,
+  };
+
+  if (req.body.avatar !== 'undefined' && req.body.avatar !== 'null') {
+    const user = await User.findById(req.user.id);
+    if(user.hasOwnProperty('avatar')) {
+      const imageId = user.avatar.public_id;
+      await cloudinary.v2.uploader.destroy(imageId);
+    }
+    const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
+      folder: "avatars",
+      width: 150,
+      crop: "scale",
+    });
+
+    newUserData.avatar = {
+      public_id: myCloud.public_id,
+      url: myCloud.secure_url,
+    };
+  }
+  const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
     new: true,
-    validateBeforeSave: true,
+    runValidators: true,
+    useFindAndModify: false,
   });
+
   res.status(200).json({
     success: true,
-    user,
   });
 });
 
