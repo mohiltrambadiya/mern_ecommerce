@@ -17,8 +17,10 @@ import Profile from "./components/User/Profile.js";
 import ProtectedRoute from "./components/route/ProtectedRoute";
 import UpdateProfile from "./components/User/UpdateProfile.js";
 import ChangePassword from "./components/User/ChangePassword.js";
-import ForgotPassword from './components/User/ForgotPassword.js'
-import ResetPassword from './components/User/ResetPassword.js'
+import ForgotPassword from "./components/User/ForgotPassword.js";
+import ResetPassword from "./components/User/ResetPassword.js";
+import Cart from "./components/Cart/Cart.js";
+import Shipping from './components/Cart/Shipping.js'
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
@@ -37,7 +39,7 @@ function App() {
       {isAuthenticated && <UserOptions user={user} />}
       <Routes>
         <Route exact path="/" element={<Home />}></Route>
-        <Route exact path="/product/:id" element={<ProductDetail />}></Route>
+        <Route exact path="/products/:id" element={<ProductDetail />}></Route>
         <Route exact path="/products" element={<Products />}></Route>
         <Route path="/products/:keyword" element={<Products />}></Route>
         <Route exact path="/search" element={<Search />}></Route>
@@ -59,8 +61,24 @@ function App() {
             element={<ChangePassword />}
           ></Route>
         </Route>
-        <Route exact path="/password/forgot" element={<ForgotPassword />}></Route>
-        <Route exact path="/password/reset/:token" element={<ResetPassword />}></Route>
+        <Route
+          exact
+          path="/password/forgot"
+          element={<ForgotPassword />}
+        ></Route>
+        <Route
+          exact
+          path="/password/reset/:token"
+          element={<ResetPassword />}
+        ></Route>
+        <Route exact path="/cart" element={<Cart />}></Route>
+        <Route exact path="/shipping" element={<ProtectedRoute />}>
+          <Route
+            exact
+            path="/shipping"
+            element={<Shipping />}
+          ></Route>
+        </Route>
       </Routes>
       <Footer />
     </BrowserRouter>

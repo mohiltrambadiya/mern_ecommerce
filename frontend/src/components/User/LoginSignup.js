@@ -8,9 +8,9 @@ import { MailOutline, LockOpen, Face } from "@material-ui/icons";
 import ProfileImg from "../../images/Profile.png";
 import { useDispatch, useSelector } from "react-redux";
 import { login, clearErrors, register } from "../../actions/userAction";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
-const LoginSignup = () => {
+const LoginSignup = ({ location }) => {
   const dispatch = useDispatch();
   const alert = useAlert();
   const navigate = useNavigate();
@@ -31,6 +31,8 @@ const LoginSignup = () => {
   const { loading, error, isAuthenticated } = useSelector(
     (state) => state.user
   );
+  const { search } = useLocation();
+  const redirect = search ? `/${search.split("=")[1]}` : `/account`;
 
   const switchTabs = (e, tab) => {
     if (tab === "login") {
@@ -88,9 +90,9 @@ const LoginSignup = () => {
       dispatch(clearErrors());
     }
     if (isAuthenticated) {
-      navigate(`/account`);
+      navigate(redirect);
     }
-  }, [dispatch, error, navigate, isAuthenticated]);
+  }, [dispatch, error, navigate, isAuthenticated, redirect]);
 
   return (
     <Fragment>
