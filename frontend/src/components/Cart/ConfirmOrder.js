@@ -76,15 +76,15 @@ const ConfirmOrder = () => {
             <div>
               <div>
                 <p>Subtotal:</p>
-                <spam>₹{subtotal}</spam>
+                <span>₹{subtotal}</span>
               </div>
               <div>
                 <p>Shipping Charges:</p>
-                <spam>₹{shippingCharges}</spam>
+                <span>₹{shippingCharges}</span>
               </div>
               <div>
                 <p>GST:</p>
-                <spam>₹{tax}</spam>
+                <span>₹{tax}</span>
               </div>
             </div>
             <div className="orderSummaryTotal">

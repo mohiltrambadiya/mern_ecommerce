@@ -24,8 +24,9 @@ import Shipping from "./components/Cart/Shipping.js";
 import ConfirmOrder from "./components/Cart/ConfirmOrder.js";
 import axios from "axios";
 import Payment from "./components/Payment/Payment.js";
-import { Elements } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
+import OrderSuccess from "./components/Payment/OrderSuccess.js";
+import MyOrder from "./components/Order/MyOrder.js";
+import OrderDetail from './components/Order/OrderDetail.js'
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
@@ -89,9 +90,21 @@ function App() {
         <Route exact path="/order/confirm" element={<ProtectedRoute />}>
           <Route exact path="/order/confirm" element={<ConfirmOrder />}></Route>
         </Route>
-
         <Route exact path="/process/payment" element={<ProtectedRoute />}>
-          <Route exact path="/process/payment" element={<Payment stripeApiKey={stripeApiKey} />}></Route>
+          <Route
+            exact
+            path="/process/payment"
+            element={<Payment stripeApiKey={stripeApiKey} />}
+          ></Route>
+        </Route>
+        <Route exact path="/order/success" element={<ProtectedRoute />}>
+          <Route exact path="/order/success" element={<OrderSuccess />}></Route>
+        </Route>
+        <Route exact path="/view/orders" element={<ProtectedRoute />}>
+          <Route exact path="/view/orders" element={<MyOrder />}></Route>
+        </Route>
+        <Route exact path="/order/:id" element={<ProtectedRoute />}>
+          <Route exact path="/order/:id" element={<OrderDetail />}></Route>
         </Route>
       </Routes>
       <Footer />

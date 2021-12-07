@@ -35,7 +35,7 @@ const UserOptions = ({ user }) => {
     });
   }
   function orders() {
-    navigate("/orders");
+    navigate("/view/orders");
   }
   function dashboard() {
     navigate("/dashboard");
