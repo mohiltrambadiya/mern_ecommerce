@@ -10,6 +10,15 @@ import {
   SUBMIT_REVIEW_REQUEST,
   SUBMIT_REVIEW_SUCCESS,
   SUBMIT_REVIEW_FAIL,
+  ADMIN_PRODUCT_REQUEST,
+  ADMIN_PRODUCT_SUCCESS,
+  ADMIN_PRODUCT_FAIL,
+  CREATE_PRODUCT_REQUEST,
+  CREATE_PRODUCT_SUCCESS,
+  CREATE_PRODUCT_FAIL,
+  DELETE_PRODUCT_REQUEST,
+  DELETE_PRODUCT_SUCCESS,
+  DELETE_PRODUCT_FAIL,
 } from "../constants/productConstants";
 
 //get all products
@@ -82,6 +91,68 @@ export const submitProductReview = (review) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: SUBMIT_REVIEW_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+//get all product for admin
+export const getAdminProduct = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: ADMIN_PRODUCT_REQUEST,
+    });
+    const { data } = await axios.get(`/api/v1/admin/products`);
+    dispatch({
+      type: ADMIN_PRODUCT_SUCCESS,
+      payload: data.products,
+    });
+  } catch (error) {
+    dispatch({
+      type: ADMIN_PRODUCT_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+//create product - admin
+export const createProduct = (productData) => async (dispatch) => {
+  try {
+    dispatch({
+      type: CREATE_PRODUCT_REQUEST,
+    });
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data"
+      },
+    };
+    const { data } = await axios.post(`/api/v1/admin/product/create`, productData, config);
+    dispatch({
+      type: CREATE_PRODUCT_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: CREATE_PRODUCT_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+//delete product - admin
+export const deleteProduct = (id) => async (dispatch) => {
+  try {
+    dispatch({
+      type: DELETE_PRODUCT_REQUEST,
+    });
+    const { data } = await axios.delete(`/api/v1/admin/product/${id}`);
+    dispatch({
+      type: DELETE_PRODUCT_SUCCESS,
+      payload: data.success,
+    });
+  } catch (error) {
+    dispatch({
+      type: DELETE_PRODUCT_FAIL,
       payload: error.response.data.message,
     });
   }

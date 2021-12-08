@@ -26,7 +26,10 @@ import axios from "axios";
 import Payment from "./components/Payment/Payment.js";
 import OrderSuccess from "./components/Payment/OrderSuccess.js";
 import MyOrder from "./components/Order/MyOrder.js";
-import OrderDetail from './components/Order/OrderDetail.js'
+import OrderDetail from "./components/Order/OrderDetail.js";
+import Dashboaard from "./components/Admin/Dashboard.js";
+import ProductList from "./components/Admin/ProductList.js";
+import CreateProduct from './components/Admin/CreateProduct.js'
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
@@ -105,6 +108,23 @@ function App() {
         </Route>
         <Route exact path="/order/:id" element={<ProtectedRoute />}>
           <Route exact path="/order/:id" element={<OrderDetail />}></Route>
+        </Route>
+        <Route
+          exact
+          path="/admin/dashboard"
+          element={<ProtectedRoute isAdmin={true} />}
+        >
+          <Route exact path="/admin/dashboard" element={<Dashboaard />}></Route>
+        </Route>
+        <Route
+          exact
+          path="/admin/products"
+          element={<ProtectedRoute isAdmin={true} />}
+        >
+          <Route exact path="/admin/products" element={<ProductList />}></Route>
+        </Route>
+        <Route exact path="/admin/product" element={<ProtectedRoute isAdmin={true}/>}>
+          <Route exact path="/admin/product" element={<CreateProduct />}></Route>
         </Route>
       </Routes>
       <Footer />

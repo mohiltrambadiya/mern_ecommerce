@@ -25,7 +25,7 @@ export const orderReducer = (state = {}, action) => {
       };
     case ORDER_FAIL:
       return {
-        loading: true,
+        loading: false,
         error: action.payload,
       };
     case CLEAR_ERRORS: {

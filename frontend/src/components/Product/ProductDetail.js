@@ -7,7 +7,6 @@ import {
   submitProductReview,
 } from "../../actions/productAction";
 import { useParams } from "react-router-dom";
-import ReactStars from "react-rating-stars-component";
 import "./ProductDetail.css";
 import ReviewCard from "./ReviewCard.js";
 import Loader from "../layout/Loader/Loader";
@@ -32,12 +31,10 @@ const ProductDetail = () => {
     (state) => state.productDetail
   );
   const options = {
-    edit: false,
-    color: "rgba(20,20,20,0.1)",
-    activeColor: "tomato",
     value: productDetail.rateings,
-    isHalf: true,
-    size: window.innerWidth < 600 ? 20 : 25,
+    readOnly: true,
+    precision: 0.5,
+    size: 'large',
   };
   const [quantity, setQuantity] = useState(1);
   const [open, setOpen] = useState(false);
@@ -46,7 +43,7 @@ const ProductDetail = () => {
   const submitReviewToggle = () => {
     open ? setOpen(false) : setOpen(true);
   };
-  const { error: reviewError, success } = useSelector(
+  const {loading:reviewLoading, error: reviewError, success } = useSelector(
     (state) => state.submitreview
   );
 
@@ -91,7 +88,7 @@ const ProductDetail = () => {
 
   return (
     <Fragment>
-      {loading ? (
+      {loading || reviewLoading ? (
         <Loader />
       ) : (
         <Fragment>
@@ -118,7 +115,7 @@ const ProductDetail = () => {
               </div>
 
               <div className="detailsBlock-2">
-                <ReactStars {...options} />
+                <Rating {...options} />
                 <span>({productDetail.num_of_reviews} Reviews)</span>
               </div>
 

@@ -45,7 +45,7 @@ const orderSchema = new mongoose.Schema(
                 type: String,
                 required: true
             },
-            product_id: {
+            product: {
                 type: mongoose.Schema.ObjectId,
                 required: true,
                 ref: 'Product'
@@ -75,7 +75,7 @@ const orderSchema = new mongoose.Schema(
             required: true,
             default: 0
         },
-        tex_price: {
+        tax_price: {
             type: Number,
             required: true,
             default: 0
