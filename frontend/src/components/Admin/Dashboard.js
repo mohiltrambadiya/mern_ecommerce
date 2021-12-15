@@ -20,6 +20,8 @@ import { useAlert } from "react-alert";
 import { clearErrors, getAdminProduct } from "../../actions/productAction";
 import MetaData from "../layout/MetaData";
 import Loader from "../layout/Loader/Loader";
+import { getAllOrder } from "../../actions/orderAction.js";
+import { getAllUser } from "../../actions/userAction.js";
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -36,19 +38,44 @@ const Dashboard = () => {
   const alert = useAlert();
   let outOfStock = 0;
   const { loading, error, products } = useSelector((state) => state.products);
+  const {
+    loading: orderLoading,
+    error: orderError,
+    orders,
+  } = useSelector((state) => state.allorder);
+  const {
+    loading: userLoading,
+    error: userError,
+    users,
+  } = useSelector((state) => state.alluser);
   products &&
     products.forEach((item) => {
       if (item.stock < 1) {
         outOfStock += 1;
       }
     });
+  let totalAmount = 0;
+  orders &&
+    orders.forEach((item) => {
+      totalAmount += item.total_price;
+    });
   useEffect(() => {
     if (error) {
       alert.error(error);
       dispatch(clearErrors());
     }
+    if (orderError) {
+      alert.error(error);
+      dispatch(clearErrors());
+    }
+    if (userError) {
+      alert.error(error);
+      dispatch(clearErrors());
+    }
     dispatch(getAdminProduct());
-  }, [dispatch, alert, error]);
+    dispatch(getAllOrder());
+    dispatch(getAllUser());
+  }, [dispatch, alert, error, orderError, userError]);
   const lineState = {
     labels: ["Initial Amount", "Amount Earned"],
     datasets: [
@@ -56,7 +83,7 @@ const Dashboard = () => {
         label: "TOTAL AMOUNT",
         backgroundColor: ["tomato"],
         hoverBackgroundColor: ["rgb(197, 72, 49)"],
-        data: [0, 500],
+        data: [0, totalAmount],
       },
     ],
   };
@@ -73,7 +100,7 @@ const Dashboard = () => {
   };
   return (
     <Fragment>
-      {loading ? (
+      {loading || orderLoading || userLoading ? (
         <Loader />
       ) : (
         <Fragment>
@@ -84,7 +111,7 @@ const Dashboard = () => {
               <div className="dashboardSummary">
                 <div>
                   <p>
-                    Total Amount <br /> ₹4000
+                    Total Amount <br /> ₹{totalAmount}
                   </p>
                 </div>
                 <div className="dashboardSummaryBox2">
@@ -94,11 +121,11 @@ const Dashboard = () => {
                   </Link>
                   <Link to="/admin/orders">
                     <p>Orders</p>
-                    <p>50</p>
+                    <p>{orders && orders.length}</p>
                   </Link>
                   <Link to="/admin/users">
                     <p>Users</p>
-                    <p>50</p>
+                    <p>{users && users.length}</p>
                   </Link>
                 </div>
               </div>

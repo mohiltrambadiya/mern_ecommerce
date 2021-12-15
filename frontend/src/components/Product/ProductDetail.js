@@ -95,17 +95,11 @@ const ProductDetail = () => {
           <MetaData title={`PRODUCTDETAIL - ${productDetail.name}`} />
           <div className="ProductDetails">
             <div>
-              <Carousel>
-                {productDetail.images &&
-                  productDetail.images.map((image, i) => (
-                    <img
-                      className="CarouselImage"
-                      key={i}
-                      src={image.url}
-                      alt={`${i} Slide`}
-                    />
-                  ))}
-              </Carousel>
+                <img
+                  className="CarouselImage"
+                  src={productDetail.images[0].url}
+                  alt='product'
+                />
             </div>
 
             <div>

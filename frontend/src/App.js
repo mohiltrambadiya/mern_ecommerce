@@ -29,7 +29,15 @@ import MyOrder from "./components/Order/MyOrder.js";
 import OrderDetail from "./components/Order/OrderDetail.js";
 import Dashboaard from "./components/Admin/Dashboard.js";
 import ProductList from "./components/Admin/ProductList.js";
-import CreateProduct from './components/Admin/CreateProduct.js'
+import CreateProduct from "./components/Admin/CreateProduct.js";
+import UpdateProduct from "./components/Admin/UpdateProduct.js";
+import OrderList from './components/Admin/OrderList.js';
+import UpdateOrder from './components/Admin/UpdateOrder.js';
+import UserList from './components/Admin/UserList.js'
+import UserUpdate from './components/Admin/UserUpdate.js'
+import Contact from "./components/layout/Contact/Contact";
+import About from "./components/layout/About/About";
+import NotFound from "./components/layout/Not Found/NotFound.js";
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
@@ -44,8 +52,10 @@ function App() {
         families: ["Roboto", "Droid Sans", "Chilanka"],
       },
     });
-    store.dispatch(loadUser());
-    getStripeApiKey();
+    if(isAuthenticated) {
+      store.dispatch(loadUser());
+      getStripeApiKey();
+    }
   }, []);
 
   return (
@@ -123,9 +133,77 @@ function App() {
         >
           <Route exact path="/admin/products" element={<ProductList />}></Route>
         </Route>
-        <Route exact path="/admin/product" element={<ProtectedRoute isAdmin={true}/>}>
-          <Route exact path="/admin/product" element={<CreateProduct />}></Route>
+        <Route
+          exact
+          path="/admin/product"
+          element={<ProtectedRoute isAdmin={true} />}
+        >
+          <Route
+            exact
+            path="/admin/product"
+            element={<CreateProduct />}
+          ></Route>
         </Route>
+        <Route
+          exact
+          path="/admin/product/:productId"
+          element={<ProtectedRoute isAdmin={true} />}
+        >
+          <Route
+            exact
+            path="/admin/product/:productId"
+            element={<UpdateProduct />}
+          ></Route>
+        </Route>
+        <Route
+          exact
+          path="/admin/orders"
+          element={<ProtectedRoute isAdmin={true} />}
+        >
+          <Route
+            exact
+            path="/admin/orders"
+            element={<OrderList />}
+          ></Route>
+        </Route>
+        <Route
+          exact
+          path="/admin/order/:orderId"
+          element={<ProtectedRoute isAdmin={true} />}
+        >
+          <Route
+            exact
+            path="/admin/order/:orderId"
+            element={<UpdateOrder />}
+          ></Route>
+        </Route>
+
+        <Route
+          exact
+          path="/admin/users/"
+          element={<ProtectedRoute isAdmin={true} />}
+        >
+          <Route
+            exact
+            path="/admin/users/"
+            element={<UserList />}
+          ></Route>
+        </Route>
+
+        <Route
+          exact
+          path="/admin/user/:userId"
+          element={<ProtectedRoute isAdmin={true} />}
+        >
+          <Route
+            exact
+            path="/admin/user/:userId"
+            element={<UserUpdate />}
+          ></Route>
+        </Route>
+        <Route exact path="/contact" element={<Contact />} />
+        <Route exact path="/about" element={<About />} />
+        <Route exact path="*" element={<NotFound />} />
       </Routes>
       <Footer />
     </BrowserRouter>

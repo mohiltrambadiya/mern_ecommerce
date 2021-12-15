@@ -92,7 +92,7 @@ const ProductList = () => {
     loading: deleteLoading,
     error: deleteError,
     success,
-  } = useSelector((state) => state.deleteproduct);
+  } = useSelector((state) => state.productaction);
 
   useEffect(() => {
     if (error) {

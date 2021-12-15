@@ -42,9 +42,6 @@ const Sidebar = () => {
       <Link to='/admin/users'>
           <p><People/> Users</p>
       </Link>
-      <Link to='/admin/reviews'>
-          <p><RateReview/> Reviews</p>
-      </Link>
   </div>;
 };
 

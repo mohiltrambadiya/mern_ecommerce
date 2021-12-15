@@ -9,13 +9,20 @@ import {
 import Loader from "../layout/Loader/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import { useAlert } from "react-alert";
-import { clearErrors, createProduct } from "../../actions/productAction";
+import {
+  clearErrors,
+  updateProduct,
+  getProductDetail,
+} from "../../actions/productAction";
 import MetaData from "../layout/MetaData";
 import Sidebar from "./Sidebar";
 import { Button } from "@material-ui/core";
-import { CREATE_PRODUCT_RESET } from "../../constants/productConstants";
-import { useNavigate } from "react-router";
-import './CreateProduct.css'
+import {
+  UPDATE_PRODUCT_RESET,
+  PRODUCT_DETAIL_RESET,
+} from "../../constants/productConstants";
+import { useNavigate, useParams } from "react-router";
+import "./CreateProduct.css";
 const categories = [
   "Laptop",
   "Footwear",
@@ -26,21 +33,30 @@ const categories = [
   "SmartPhone",
 ];
 
-function CreateProduct() {
+function UpdateProduct() {
   const dispatch = useDispatch();
   const alert = useAlert();
   const navigate = useNavigate();
-  const { loading, error, success } = useSelector(
-    (state) => state.newproduct
-  );
+  const {
+    loading,
+    error: updateError,
+    success,
+  } = useSelector((state) => state.productaction);
+  const {
+    loading: detailLoading,
+    error,
+    productDetail,
+  } = useSelector((state) => state.productDetail);
   const [name, setName] = useState();
   const [price, setPrice] = useState();
   const [stock, setStock] = useState();
   const [category, setCategory] = useState();
   const [description, setDescription] = useState();
   const [images, setImages] = useState([]);
+  const [oldImages, setOldImages] = useState([]);
   const [imagesPreview, setImagesPreview] = useState([]);
-  const createProductHandler = () => {
+  const { productId } = useParams();
+  const updateProductHandler = () => {
     const productForm = new FormData();
     productForm.set("name", name);
     productForm.set("price", price);
@@ -50,24 +66,50 @@ function CreateProduct() {
     images.forEach((image) => {
       productForm.append("images", image);
     });
-    dispatch(createProduct(productForm));
+    dispatch(updateProduct(productForm, productId));
   };
+
   useEffect(() => {
+    if (productDetail && productDetail._id !== productId) {
+      dispatch(getProductDetail(productId));
+    } else {
+      setName(productDetail.name);
+      setDescription(productDetail.description);
+      setStock(productDetail.stock);
+      setPrice(productDetail.price);
+      setCategory(productDetail.category);
+      setOldImages(productDetail.images);
+    }
     if (error) {
       alert.error(error);
       dispatch(clearErrors());
     }
-    if (success) {
-      alert.success("Product created succesfully");
-      dispatch({ type: CREATE_PRODUCT_RESET });
-      navigate("/admin/products");
+    if (updateError) {
+      alert.error(updateError);
+      dispatch(clearErrors());
     }
-  }, [dispatch, error, success, alert, navigate]);
-  const createProductImagesChange = (e) => {
+    if (success) {
+      alert.success("Product updated succesfully");
+      navigate("/admin/products");
+      dispatch({ type: UPDATE_PRODUCT_RESET });
+      dispatch({ type: PRODUCT_DETAIL_RESET });
+    }
+  }, [
+    dispatch,
+    error,
+    success,
+    alert,
+    navigate,
+    updateError,
+    productDetail,
+    productId,
+  ]);
+  const updateProductImagesChange = (e) => {
     const files = Array.from(e.target.files);
 
     setImages([]);
     setImagesPreview([]);
+    setOldImages([]);
 
     files.forEach((file) => {
       const reader = new FileReader();
@@ -84,7 +126,7 @@ function CreateProduct() {
   };
   return (
     <Fragment>
-      {loading ? (
+      {loading || detailLoading ? (
         <Loader />
       ) : (
         <Fragment>
@@ -95,7 +137,7 @@ function CreateProduct() {
               <form
                 className="createProductForm"
                 encType="multipart/form-data"
-                onSubmit={createProductHandler}
+                onSubmit={updateProductHandler}
               >
                 <div>
                   <Spellcheck />
@@ -136,10 +178,12 @@ function CreateProduct() {
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
                   >
-                    <option value=''>-- select --</option>
+                    <option value="">-- select --</option>
                     {categories &&
                       categories.map((cat) => (
-                        <option value={cat}>{cat}</option>
+                        <option key={cat} value={cat}>
+                          {cat}
+                        </option>
                       ))}
                   </select>
                 </div>
@@ -159,8 +203,14 @@ function CreateProduct() {
                     name="avatar"
                     accept="image/*"
                     multiple
-                    onChange={createProductImagesChange}
+                    onChange={updateProductImagesChange}
                   />
+                </div>
+                <div id="createProductFormImage">
+                  {oldImages &&
+                    oldImages.map((image, index) => (
+                      <img src={image.url} alt="product" key={index} />
+                    ))}
                 </div>
                 <div id="createProductFormImage">
                   {imagesPreview.map((image, index) => (
@@ -172,7 +222,7 @@ function CreateProduct() {
                   type="submit"
                   disabled={loading ? true : false}
                 >
-                  Create
+                  Update
                 </Button>
               </form>
             </div>
@@ -183,4 +233,4 @@ function CreateProduct() {
   );
 }
 
-export default CreateProduct;
+export default UpdateProduct;

@@ -24,6 +24,21 @@ import {
   RESET_PASSWORD_REQUEST,
   RESET_PASSWORD_SUCCESS,
   RESET_PASSWORD_FAIL,
+  ALL_USER_REQUEST,
+  ALL_USER_SUCCESS,
+  ALL_USER_FAIL,
+  UPDATE_USER_REQUEST,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_FAIL,
+  UPDATE_USER_RESET,
+  DELETE_USER_REQUEST,
+  DELETE_USER_SUCCESS,
+  DELETE_USER_FAIL,
+  DELETE_USER_RESET,
+  USER_DETAIL_REQUEST,
+  USER_DETAIL_SUCCESS,
+  USER_DETAIL_FAIL,
+  USER_DETAIL_RESET,
   CLEAR_ERRORS,
 } from "../constants/userConstants";
 
@@ -155,6 +170,111 @@ export const forgotPasswordReducer = (state = {}, action) => {
         loading: false,
       };
 
+    default:
+      return state;
+  }
+};
+
+export const getAllUserReducer = (state = { users: [] }, action) => {
+  switch (action.type) {
+    case ALL_USER_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case ALL_USER_SUCCESS:
+      return {
+        loading: false,
+        users: action.payload,
+      };
+    case ALL_USER_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+        loading: false,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const userDetailReducer = (state = { user: {} }, action) => {
+  switch (action.type) {
+    case USER_DETAIL_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case USER_DETAIL_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        user: action.payload,
+      };
+
+    case USER_DETAIL_RESET:
+      return {
+        user: {},
+        loading: false,
+      };
+    case USER_DETAIL_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const userActionReducer = (state = {}, action) => {
+  switch (action.type) {
+    case DELETE_USER_REQUEST:
+    case UPDATE_USER_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case DELETE_USER_SUCCESS:
+    case UPDATE_USER_SUCCESS:
+      return {
+        loading: false,
+        success: action.payload,
+      };
+    case DELETE_USER_RESET:
+    case UPDATE_USER_RESET:
+      return {
+        ...state,
+        success: false,
+        loading: false,
+      };
+    case DELETE_USER_FAIL:
+    case UPDATE_USER_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+    case CLEAR_ERRORS: {
+      return {
+        ...state,
+        loading: false,
+        error: null,
+      };
+    }
     default:
       return state;
   }
