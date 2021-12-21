@@ -6,7 +6,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Lock, LockOpen } from "@material-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { clearErrors, resetPassword } from "../../actions/userAction";
-import "./ResetPassword.css";
 
 const ResetPassword = () => {
   const dispatch = useDispatch();
@@ -35,7 +34,7 @@ const ResetPassword = () => {
       alert.success("Password reset succesfully.");
       navigate("/login");
     }
-  }, [dispatch, navigate, success, error]);
+  }, [dispatch, navigate, success, error, alert]);
   return (
     <Fragment>
       {loading ? (
@@ -43,11 +42,11 @@ const ResetPassword = () => {
       ) : (
         <Fragment>
           <MetaData title="reset password" />
-          <div className="resetPasswordContainer">
-            <div className="resetPasswordBox">
-              <h2 className="resetPasswordHeading">Reset Password</h2>
+          <div className="formContainer">
+            <div className="formBox">
+              <h2 className="formHeading">Reset Password</h2>
               <form
-                className="resetPasswordForm"
+                className="ecomForm"
                 onSubmit={resetPasswordSubmit}
               >
                 <div>
@@ -75,7 +74,7 @@ const ResetPassword = () => {
                 <input
                   type="submit"
                   value="Update"
-                  className="resetPasswordBtn"
+                  className="formSubmitBtn"
                 />
               </form>
             </div>

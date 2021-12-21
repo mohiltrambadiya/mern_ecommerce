@@ -15,7 +15,6 @@ import Sidebar from "./Sidebar";
 import { Button } from "@material-ui/core";
 import { CREATE_PRODUCT_RESET } from "../../constants/productConstants";
 import { useNavigate } from "react-router";
-import './CreateProduct.css'
 const categories = [
   "Laptop",
   "Footwear",

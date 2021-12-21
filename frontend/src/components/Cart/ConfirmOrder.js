@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import MetaData from "../layout/MetaData";
 import CheckoutSteps from "./CheckoutSteps";
-import "./ConfirmOrder.css";
 import { useNavigate } from "react-router";
 
 const ConfirmOrder = () => {

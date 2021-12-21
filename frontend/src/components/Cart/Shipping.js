@@ -8,7 +8,6 @@ import {
   TransferWithinAStation,
 } from "@material-ui/icons";
 import { Country, State } from "country-state-city";
-import "./Shipping.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useAlert } from "react-alert";
 import MetaData from "../layout/MetaData";

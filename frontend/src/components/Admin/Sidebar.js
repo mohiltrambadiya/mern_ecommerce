@@ -1,5 +1,4 @@
 import React from "react";
-import "./Sidebaar.css";
 import { Link } from "react-router-dom";
 import { TreeItem, TreeView } from "@material-ui/lab";
 import {
@@ -9,8 +8,7 @@ import {
   ImportExport,
   ListAlt,
   Dashboard,
-  People,
-  RateReview,
+  People
 } from "@material-ui/icons";
 import Logo from '../../images/logo.png'
 

@@ -10,10 +10,9 @@ import {
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
-import "./Payment.css";
 import { CreditCard, Event, VpnKey } from "@material-ui/icons";
 import axios from "axios";
-import { Card, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
 import { clearErrors, createOrder } from "../../actions/orderAction";
 
@@ -108,7 +107,7 @@ const CheckoutFrom = () => {
       alert.error(error);
       dispatch(clearErrors);
     }
-  }, [dispatch, error]);
+  }, [dispatch, error, alert]);
   return (
     <Fragment>
       <MetaData title="Payment" />

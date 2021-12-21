@@ -22,7 +22,6 @@ import {
   PRODUCT_DETAIL_RESET,
 } from "../../constants/productConstants";
 import { useNavigate, useParams } from "react-router";
-import "./CreateProduct.css";
 const categories = [
   "Laptop",
   "Footwear",

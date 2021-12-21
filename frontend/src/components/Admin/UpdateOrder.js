@@ -8,7 +8,6 @@ import { useAlert } from "react-alert";
 import AccountTreeIcon from "@material-ui/icons/AccountTree";
 import { Button } from "@material-ui/core";
 import { UPDATE_ORDER_RESET } from "../../constants/orderConstants";
-import "./UpdateOrder.css";
 import {useNavigate, useParams, Link} from 'react-router-dom'
 import { clearErrors, getOrderDetail, updateOrder } from "../../actions/orderAction";
 
@@ -51,7 +50,7 @@ const UpdateOrder = () => {
       dispatch(getOrderDetail(orderId));
     }
 
-  }, [dispatch, alert, error, orderId, success, updateError, navigate]);
+  }, [dispatch, alert, error, orderId, success, updateError, navigate, order]);
 
   return (
     <Fragment>

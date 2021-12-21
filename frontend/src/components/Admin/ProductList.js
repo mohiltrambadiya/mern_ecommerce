@@ -13,7 +13,6 @@ import { Link } from "react-router-dom";
 import MetaData from "../layout/MetaData";
 import Sidebar from "./Sidebar";
 import { DataGrid } from "@material-ui/data-grid";
-import "./ProductList.css";
 import { DELETE_PRODUCT_RESET } from "../../constants/productConstants";
 
 const ProductList = () => {

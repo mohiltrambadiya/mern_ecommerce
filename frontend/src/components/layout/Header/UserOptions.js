@@ -12,7 +12,6 @@ import { useNavigate } from "react-router-dom";
 import { logout } from "../../../actions/userAction";
 import { useDispatch, useSelector } from "react-redux";
 import { useAlert } from "react-alert";
-import "./Headers.css";
 import { Backdrop } from "@material-ui/core";
 
 const UserOptions = ({ user }) => {

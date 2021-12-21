@@ -1,5 +1,4 @@
 import React, { Fragment, useEffect, useState } from "react";
-import "./Products.css";
 import { useDispatch, useSelector } from "react-redux";
 import { clearErrors, getAllProduct } from "../../actions/productAction";
 import Loader from "../layout/Loader/Loader";
@@ -65,7 +64,7 @@ const Products = () => {
           <h2 className="productsHeading">Products</h2>
           <div className="products">
             {products &&
-              products.map((product, i) => <ProductCard product={product} />)}
+              products.map((product, i) => <ProductCard key={i} product={product} />)}
           </div>
 
           <div className="filterBox">

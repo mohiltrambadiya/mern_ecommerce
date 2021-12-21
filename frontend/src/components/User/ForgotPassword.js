@@ -5,7 +5,6 @@ import { useAlert } from "react-alert";
 import { MailOutline } from "@material-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { clearErrors, forgotPassword } from "../../actions/userAction";
-import "./ForgotPassword.css";
 
 const ForgotPassword = () => {
   const alert = useAlert();
@@ -28,7 +27,7 @@ const ForgotPassword = () => {
     if (message) {
       alert.success(message);
     }
-  }, [message, error, dispatch]);
+  }, [message, error, dispatch, alert]);
   return (
     <Fragment>
       {loading ? (
@@ -36,11 +35,11 @@ const ForgotPassword = () => {
       ) : (
         <Fragment>
           <MetaData title="forgot password" />
-          <div className="forgotPasswordContainer">
-            <div className="forgotPasswordBox">
-              <h2 className="forgotPasswordHeading">Forgot Password</h2>
+          <div className="formContainer">
+            <div className="formBox">
+              <h2 className="formHeading">Forgot Password</h2>
               <form
-                className="forgotPasswordForm"
+                className="ecomForm"
                 onSubmit={forgotPasswordSubmit}
               >
                 <div className="forgotPasswordEmail">
@@ -58,7 +57,7 @@ const ForgotPassword = () => {
                 <input
                   type="submit"
                   value="Change"
-                  className="forgotPasswordBtn"
+                  className="formSubmitBtn"
                 />
               </form>
             </div>

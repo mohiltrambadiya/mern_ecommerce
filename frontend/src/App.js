@@ -1,4 +1,5 @@
 import "./App.css";
+import "./components/layout/theme.css";
 import Header from "./components/layout/Header/Header.js";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Webfont from "webfontloader";
@@ -52,10 +53,8 @@ function App() {
         families: ["Roboto", "Droid Sans", "Chilanka"],
       },
     });
-    if(isAuthenticated) {
-      store.dispatch(loadUser());
-      getStripeApiKey();
-    }
+    store.dispatch(loadUser());
+    getStripeApiKey();
   }, []);
 
   return (

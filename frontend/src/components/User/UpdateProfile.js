@@ -11,7 +11,6 @@ import {
   loadUser,
   updateUserProfile,
 } from "../../actions/userAction";
-import "./UpdateProfile.css";
 import { PROFILE_UPDATE_RESET } from "../../constants/userConstants";
 
 const UpdateProfile = () => {
@@ -55,11 +54,11 @@ const UpdateProfile = () => {
     if (user) {
       setName(user.name);
       setEmail(user.email);
-      {
+      
         user.avatar && user.avatar.url
           ? setAvatarPerview(user.avatar.url)
           : setAvatarPerview(ProfileImg);
-      }
+      
     }
     if (error) {
       alert.error(error);
@@ -74,7 +73,7 @@ const UpdateProfile = () => {
         type: PROFILE_UPDATE_RESET,
       });
     }
-  }, [user, error, dispatch, isUpdated, navigate]);
+  }, [user, error, dispatch, isUpdated, navigate, alert]);
 
   return (
     <Fragment>
@@ -83,11 +82,11 @@ const UpdateProfile = () => {
       ) : (
         <Fragment>
           <MetaData title="update profile" />
-          <div className="updateProfileContainer">
-            <div className="updateProfileBox">
-              <h2 className="updateProfileHeading">Update Profile</h2>
+          <div className="formContainer">
+            <div className="formBox">
+              <h2 className="formHeading">Update Profile</h2>
               <form
-                className="updateProfileForm"
+                className="ecomForm"
                 encType="multipart/form-data"
                 onSubmit={updateProfileSubmit}
               >
@@ -114,7 +113,7 @@ const UpdateProfile = () => {
                   />
                 </div>
 
-                <div id="updateProfileImage">
+                <div id="formImageDiv">
                   <img src={avatarPreview} alt="Avatar Preview" />
                   <input
                     type="file"
@@ -126,7 +125,7 @@ const UpdateProfile = () => {
                 <input
                   type="submit"
                   value="Update"
-                  className="updateProfileBtn"
+                  className="formSubmitBtn"
                 />
               </form>
             </div>

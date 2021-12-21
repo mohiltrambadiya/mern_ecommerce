@@ -8,7 +8,6 @@ import MetaData from "../layout/MetaData";
 import { useSelector, useDispatch } from "react-redux";
 import { getMyOrder, clearErrors } from "../../actions/orderAction";
 import {Link} from 'react-router-dom'
-import './MyOrder.css'
 
 const MyOrder = () => {
   const dispatch = useDispatch();
@@ -76,7 +75,7 @@ const MyOrder = () => {
       dispatch(clearErrors());
     }
     dispatch(getMyOrder());
-  }, [dispatch, error]);
+  }, [dispatch, error, alert]);
   return (
     <Fragment>
       {loading ? (

@@ -1,5 +1,4 @@
 import React, { Fragment, useEffect, useState } from "react";
-import Carousel from "react-material-ui-carousel";
 import { useDispatch, useSelector } from "react-redux";
 import {
   clearErrors,
@@ -7,7 +6,6 @@ import {
   submitProductReview,
 } from "../../actions/productAction";
 import { useParams } from "react-router-dom";
-import "./ProductDetail.css";
 import ReviewCard from "./ReviewCard.js";
 import Loader from "../layout/Loader/Loader";
 import { useAlert } from "react-alert";
@@ -70,7 +68,6 @@ const ProductDetail = () => {
   };
 
   useEffect(() => {
-    console.log(success)
     if (error) {
       alert.error(error);
       dispach(clearErrors());
@@ -92,7 +89,7 @@ const ProductDetail = () => {
         <Loader />
       ) : (
         <Fragment>
-          <MetaData title={`PRODUCTDETAIL - ${productDetail.name}`} />
+          <MetaData title={`Productdetail - ${productDetail.name}`} />
           <div className="ProductDetails">
             <div>
                 <img

@@ -5,7 +5,6 @@ import {
   LocalShipping,
 } from "@material-ui/icons";
 import React, { Fragment } from "react";
-import "./CheckoutSteps.css";
 
 const CheckoutSteps = ({ activeStep }) => {
   const steps = [

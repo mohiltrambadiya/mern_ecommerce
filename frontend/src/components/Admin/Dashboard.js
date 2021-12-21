@@ -1,6 +1,5 @@
 import React, { Fragment, useEffect } from "react";
 import Sidebar from "./Sidebar.js";
-import "./Dashboard.css";
 import { Typography } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import {
@@ -104,6 +103,7 @@ const Dashboard = () => {
         <Loader />
       ) : (
         <Fragment>
+          <MetaData title='Dashboard'/>
           <div className="dashboard">
             <Sidebar />
             <div className="dashboardContainer">

@@ -2,7 +2,6 @@ import React, { Fragment, useEffect, useRef, useState } from "react";
 import MetaData from "../layout/MetaData";
 import Loader from "../layout/Loader/Loader";
 import { useAlert } from "react-alert";
-import "./LoginSignup.css";
 import { Link } from "react-router-dom";
 import { MailOutline, LockOpen, Face } from "@material-ui/icons";
 import ProfileImg from "../../images/Profile.png";
@@ -92,7 +91,7 @@ const LoginSignup = ({ location }) => {
     if (isAuthenticated) {
       navigate(redirect);
     }
-  }, [dispatch, error, navigate, isAuthenticated, redirect]);
+  }, [dispatch, error, navigate, isAuthenticated, redirect, alert]);
 
   return (
     <Fragment>
@@ -100,6 +99,7 @@ const LoginSignup = ({ location }) => {
         <Loader />
       ) : (
         <Fragment>
+          <MetaData title='Login And SignUp'/>
           <div className="LoginSignUpContainer">
             <div className="LoginSignUpBox">
               <div>

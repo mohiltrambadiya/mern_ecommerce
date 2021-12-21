@@ -1,5 +1,4 @@
 import React, { Fragment, useEffect } from "react";
-import "./OrderDetail.css";
 import Loader from "../layout/Loader/Loader";
 import MetaData from "../layout/MetaData";
 import { useSelector, useDispatch } from "react-redux";
@@ -20,7 +19,7 @@ const OrderDetail = () => {
       dispatch(clearErrors());
     }
     dispatch(getOrderDetail(id));
-  }, [dispatch, error, id]);
+  }, [dispatch, error, id, alert]);
 
   return (
     <Fragment>

@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import { VpnKey, Lock, LockOpen } from "@material-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { clearErrors, changePassword } from "../../actions/userAction";
-import "./changePassword.css";
 import { PASSWORD_UPDATE_RESET } from "../../constants/userConstants";
 
 const ChangePassword = () => {
@@ -40,7 +39,7 @@ const ChangePassword = () => {
       });
       navigate("/account");
     }
-  }, [dispatch, error, isUpdated, navigate]);
+  }, [dispatch, error, isUpdated, navigate, alert]);
 
   return (
     <Fragment>
@@ -49,11 +48,11 @@ const ChangePassword = () => {
       ) : (
         <Fragment>
           <MetaData title="change password" />
-          <div className="updatePasswordContainer">
-            <div className="updatePasswordBox">
-              <h2 className="updatePasswordHeading">Change Password</h2>
+          <div className="formContainer">
+            <div className="formBox">
+              <h2 className="formHeading">Change Password</h2>
               <form
-                className="updatePasswordForm"
+                className="ecomForm"
                 onSubmit={changePasswordSubmit}
               >
                 <div className="signUpPassword">
@@ -93,7 +92,7 @@ const ChangePassword = () => {
                 <input
                   type="submit"
                   value="Change"
-                  className="updatePasswordBtn"
+                  className="formSubmitBtn"
                 />
               </form>
             </div>

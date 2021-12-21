@@ -1,9 +1,7 @@
 import React, { Fragment } from "react";
 import { CheckCircle } from "@material-ui/icons";
-import "./orderSuccess.css";
 import { Link } from "react-router-dom";
 import { Typography } from "@material-ui/core";
-import Loader from "../layout/Loader/Loader";
 import MetaData from "../layout/MetaData";
 
 const OrderSuccess = () => {
